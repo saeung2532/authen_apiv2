@@ -1,0 +1,30 @@
+server:
+  port: 9090
+  
+spring:
+  datasource:
+    m3:
+      driver-class-name: com.ibm.as400.access.AS400JDBCDriver
+      url: jdbc:as400://192.200.9.190;transaction isolation=none;libraries=M3FDBTST;
+      schema: M3FDBTST
+      username: m3srvadm
+      password: m3srvadm 
+    addon:
+      driver-class-name: com.ibm.as400.access.AS400JDBCDriver
+      url: jdbc:as400://192.200.9.190;transaction isolation=none;libraries=BRLDTABK01;
+      schema: BRLDTABK01
+      username: m3srvadm
+      password: m3srvadm    
+
+  hibernate:
+    ddl-auto: update
+    dialect: org.hibernate.dialect.DB2400Dialect
+    format_sql: true
+    show-sql: true
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc.core: debug
+
