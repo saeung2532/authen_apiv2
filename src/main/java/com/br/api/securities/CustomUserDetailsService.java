@@ -13,35 +13,31 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.br.api.models.addon.User;
-import com.br.api.services.UserService;
+import com.br.api.repositories.addon.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-	private UserService userService;
+	private final UserRepository userRepository;
 
-	public CustomUserDetailsService(UserService userService) {
-		this.userService = userService;
+	public CustomUserDetailsService(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userService.findByUsername(username);
-
+		User user = userRepository.findUserByUsername(username);
 		if (user != null) {
 			Set<GrantedAuthority> roles = new HashSet<>();
 			roles.add(new SimpleGrantedAuthority(user.getRole()));
 
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(roles);
 
-			return new org.springframework.security.core.userdetails
-					.User(user.getUsername(), user.getPassword(), authorities);
-
+			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+					authorities);
 		} else {
-			throw new UsernameNotFoundException("username: " + username + " does not exist.");
-
+			throw new UsernameNotFoundException("Username: " + username + "does not exist.");
 		}
-
 	}
 
 }

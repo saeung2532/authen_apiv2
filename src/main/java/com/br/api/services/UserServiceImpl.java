@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +18,24 @@ import com.br.api.repositories.addon.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
-//	@Autowired
-//	private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	final private UserRepository userRepository;
 	final private BCryptPasswordEncoder bcryptPasswordEncoder;
+//	private AuthenticationManager authenticationManager;
 
-	public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bcryptPasswordEncoder) {
+	public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder bcryptPasswordEncoder
+//			, AuthenticationManager authenticationManager
+			) {
 		this.userRepository = userRepository;
 		this.bcryptPasswordEncoder = bcryptPasswordEncoder;
+//		this.authenticationManager = authenticationManager;
 	}
 
 	@Override
 	public User register(UserRequest userRequest) {
-		User user = userRepository.findByUsername(userRequest.getUsername());
+		User user = userRepository.findUserByUsername(userRequest.getUsername());
 
 		if (user == null) {
 			user = new User()
@@ -45,8 +51,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUsername(String username) {
-		Optional<User> user = Optional.ofNullable(userRepository.findByUsername(username));
+	public User findUserByUsername(String username) {
+		Optional<User> user = Optional.ofNullable(userRepository.findUserByUsername(username));
 
 		if (user.isPresent()) {
 			User existingUser = user.get();

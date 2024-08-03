@@ -32,7 +32,15 @@ public class User {
 	@Column(length = 150, nullable = false, unique = false)
 	private String password;
 	
+//	@Column(nullable = false)
+//	private String company;
+//	
+//	@Column(nullable = false)
+//	private String application;
+	
 	@Column(nullable = false)
 	private String role;
+	
+	
 
 }

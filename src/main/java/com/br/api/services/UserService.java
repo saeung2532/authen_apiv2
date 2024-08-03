@@ -19,6 +19,6 @@ public interface UserService {
 	
 	User register(UserRequest userRequest);
 	
-	User findByUsername(String username);
+	User findUserByUsername(String username);
 
 }

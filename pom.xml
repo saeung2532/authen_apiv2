@@ -100,13 +100,21 @@
 			<artifactId>jt400-jdk8</artifactId>
 			<version>11.1</version>
 		</dependency>
+		<!-- jtopenlite -->
 		<dependency>
 			<groupId>jtopenlite</groupId>
 			<artifactId>jtopenlite</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+			<!-- json -->
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20240303</version>
+		</dependency>
 	</dependencies>
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
