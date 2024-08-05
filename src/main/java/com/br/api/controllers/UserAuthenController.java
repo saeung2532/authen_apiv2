@@ -18,25 +18,20 @@ public class UserAuthenController {
 
 	public UserAuthenController(UserAuthenService userAuthenService) {
 		this.userAuthenService = userAuthenService;
+
 	}
 
 	@PostMapping("/logindb2")
-	public ResponseEntity loginDB2(@RequestBody UserRequest userRequest) {
-		return ResponseEntity.ok(userAuthenService.checkLoginDB2(userRequest.getUsername(), userRequest.getUsername(),
+	public ResponseEntity<String> loginDB2(@RequestBody UserRequest userRequest) {
+		return ResponseEntity.ok(userAuthenService.loginDB2(userRequest.getUsername(), userRequest.getPassword(),
 				userRequest.getCompany(), userRequest.getApplication()));
 
 	}
 
 	@GetMapping("/checktoken")
-	public ResponseEntity<Boolean> validateToken(@RequestHeader("Authorization") String token) {
-		// if (token != null && token.startsWith("Bearer ")) {
-		// String jwtToken = token.substring(7);
-		// String username = jwtUtil.getUsernameFromToken(jwtToken);
-		// if (username != null && jwtUtil.validateToken(jwtToken, username)) {
-		// return ResponseEntity.ok(true);
-		// }
-		// }
-		return ResponseEntity.ok(false);
+	public ResponseEntity<String> checktoken(@RequestHeader("Authorization") String token) {
+		return ResponseEntity.ok(userAuthenService.checkToken(token));
+
 	}
 
 }

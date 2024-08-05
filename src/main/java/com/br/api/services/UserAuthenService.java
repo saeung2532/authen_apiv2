@@ -6,7 +6,9 @@ public interface UserAuthenService {
 	
 	String checkLoginDB2(String username, String password, Integer company, String application);
 	
-	Boolean checkToken();
+	String loginDB2(String username, String password, Integer company, String application);
+	
+	String checkToken(String token);
 	
 	UserAuthen findAuthenByCTLUIDAndCTLCONOAndCTLCODE(String username, Integer company, String application);
 	
