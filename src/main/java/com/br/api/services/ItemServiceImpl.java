@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.br.api.daos.ItemDao;
-import com.br.api.models.Item;
+import com.br.api.models.m3.Item;
 
 @Service
 public class ItemServiceImpl implements ItemService {

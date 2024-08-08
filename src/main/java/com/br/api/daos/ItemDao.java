@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.br.api.models.Item;
+import com.br.api.models.m3.Item;
 
 @Repository
 public class ItemDao {

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 						, transactionManagerRef = "m3TransactionManager"
 						, basePackages = {"com.br.api.repositories.m3" }
 )
-public class DbM3Config {
+public class DBM3Config {
 
 	@Primary
 	@Bean(name = "m3Properties")

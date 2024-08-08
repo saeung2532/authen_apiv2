@@ -10,6 +10,8 @@ public interface UserAuthenService {
 	
 	String checkToken(String token);
 	
+	Boolean validateToken(String token);
+	
 	UserAuthen findAuthenByCTLUIDAndCTLCONOAndCTLCODE(String username, Integer company, String application);
 	
 }

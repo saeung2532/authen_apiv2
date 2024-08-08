@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 						, transactionManagerRef = "addonTransactionManager"
 						, basePackages = {"com.br.api.repositories.addon" }
 )
-public class DbAddonConfig {
+public class DBAddonConfig {
 
 	@Bean(name = "addonProperties")
 	@ConfigurationProperties("spring.datasource.addon")

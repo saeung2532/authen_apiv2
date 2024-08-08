@@ -66,6 +66,20 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 
 		return mJsonObj.toString();
 	}
+	
+	@Override
+	public Boolean validateToken(String token) {
+		try {
+			jwtUtil.validateToken(token);
+			System.out.println("validate: " + true);
+			return true;
+
+		} catch (Exception e) {
+			System.out.println("validate: " + false);
+			return false;
+		}
+
+	}
 
 	@Override
 	public String loginDB2(String username, String password, Integer company, String application) {
@@ -95,5 +109,7 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 
 		return mJsonObj.toString();
 	}
+
+	
 
 }

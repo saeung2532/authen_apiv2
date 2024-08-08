@@ -11,8 +11,12 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtUtil {
@@ -29,7 +33,8 @@ public class JwtUtil {
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}
 
-	public Claims validateToken(String token) {
+	public Claims validateToken(String token) throws ExpiredJwtException, UnsupportedJwtException,
+			MalformedJwtException, SignatureException, IllegalArgumentException {
 		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody();
 	}
 
