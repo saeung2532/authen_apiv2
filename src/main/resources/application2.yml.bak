@@ -1,0 +1,48 @@
+server:
+  port: 9090
+  
+app:
+  upload:
+    path: images
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 512KB
+      max-request-size: 512KB
+
+---
+spring:
+  profiles:
+    active: dev
+    
+---
+spring:
+  profiles: dev
+  datasource:
+    m3:
+      driver-class-name: com.ibm.as400.access.AS400JDBCDriver
+      url: jdbc:as400://192.200.9.190;transaction isolation=none;libraries=M3FDBTST;
+      schema: M3FDBTST
+      username: m3srvadm
+      password: m3srvadm 
+    addon:
+      driver-class-name: com.ibm.as400.access.AS400JDBCDriver
+      url: jdbc:as400://192.200.9.190;transaction isolation=none;libraries=BRLDTABK01;
+      schema: BRLDTABK01
+      username: m3srvadm
+      password: m3srvadm
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    hibernate.ddl-auto: update
+      
+logging:
+  level:
+    org:
+      springframework:
+        jdbc.core: debug
+
+---
