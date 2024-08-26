@@ -12,48 +12,47 @@ import com.ibm.jtopenlite.database.DatabaseException;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-//	@ExceptionHandler
-//	@ResponseStatus(HttpStatus.NOT_FOUND)
-//	String handlerProductNotFound(ProductNotFoundException ex) {
-//		return ex.getMessage();
-//	}
-
-//	@ExceptionHandler
-//	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//	String handlerStorageException(StorageException ex) {
-//		return ex.getMessage();
-//	}
-
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	String handlerMaxUploadSize(MaxUploadSizeExceededException ex) {
+	String handlerMaxUploadSize(MaxUploadSizeExceededException e) {
 		return "Maximum upload size exceeded";
 	}
 
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	String handlerValidation(ValidationException ex) {
-		return ex.getMessage();
+	String handlerValidation(ValidationException e) {
+		return e.getMessage();
 	}
 
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	String handlerUserDuplicate(UserDuplicateException ex) {
-		return ex.getMessage();
+	String handlerUserDuplicate(UserDuplicateException e) {
+		return e.getMessage();
 	}
-	
+
 	@ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
+	public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
 
-    @ExceptionHandler(DatabaseException.class)
-    public ResponseEntity<String> handleDatabaseException(DatabaseException ex) {
-        return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+	@ExceptionHandler(DatabaseException.class)
+	public ResponseEntity<String> handleDatabaseException(DatabaseException ex) {
+		return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGenericException(Exception ex) {
-        return new ResponseEntity<>("An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handleException(Exception e) {
+		return new ResponseEntity<>("Generic exception caught globally", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler(CustomServiceException.class)
+	public ResponseEntity<String> handleCustomServiceException(CustomServiceException e) {
+		return new ResponseEntity<>("Service exception caught globally", HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(CustomDataAccessException.class)
+	public ResponseEntity<String> handleCustomDataAccessException(CustomDataAccessException e) {
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Data access error: " + e.getMessage());
+	}
+
 }
