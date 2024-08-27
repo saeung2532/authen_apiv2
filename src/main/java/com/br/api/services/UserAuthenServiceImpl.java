@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.util.Optional;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.br.api.connections.ConnectionDB2Service;
@@ -16,15 +18,19 @@ import io.jsonwebtoken.Claims;
 @Service
 public class UserAuthenServiceImpl implements UserAuthenService {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserAuthenServiceImpl.class);
+
 	private UserAuthenRepository userAuthenRepository;
 	private ConnectionDB2Service connectionDB2Service;
 	private JwtUtil jwtUtil;
+	private JSONObject jsonObject;
 
 	public UserAuthenServiceImpl(UserAuthenRepository userAuthenRepository, ConnectionDB2Service connectionDB2Service,
-			JwtUtil jwtUtil) {
+			JwtUtil jwtUtil, JSONObject jsonObject) {
 		this.userAuthenRepository = userAuthenRepository;
 		this.connectionDB2Service = connectionDB2Service;
 		this.jwtUtil = jwtUtil;
+		this.jsonObject = jsonObject;
 
 	}
 
@@ -40,10 +46,6 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 		}
 
 		return null;
-	}
-
-	public String checkLoginDB2(String username, String password, Integer company, String application) {
-		return connectionDB2Service.checkConnection(username, password);
 	}
 
 	public String checkToken(String token) {
@@ -66,16 +68,17 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 
 		return mJsonObj.toString();
 	}
-	
+
 	@Override
 	public Boolean validateToken(String token) {
+		logger.info("Service: validateToken");
 		try {
 			jwtUtil.validateToken(token);
-			System.out.println("validate: " + true);
+			logger.debug("validateToken: true");
 			return true;
 
 		} catch (Exception e) {
-			System.out.println("validate: " + false);
+			logger.error("validateToken: fase {}" + e.getMessage());
 			return false;
 		}
 
@@ -83,15 +86,18 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 
 	@Override
 	public String loginDB2(String username, String password, Integer company, String application) {
-		JSONObject mJsonObj = new JSONObject();
-
+		logger.info("Service: loginDB2");
 		Connection conn = null;
 		try {
 			conn = connectionDB2Service.ConnectionDB2(username, password);
+			
+			jsonObject.put("result", "ok");
+			jsonObject.put("token", jwtUtil.createToken(username));
+			jsonObject.put("message", "Login successfully");
 
 		} catch (Exception e) {
-			mJsonObj.put("result", "nok");
-			mJsonObj.put("message",
+			jsonObject.put("result", "nok");
+			jsonObject.put("message",
 					e.getMessage().equals("java.io.IOException: Bad return code from signon info: 0x20002")
 							? "java.io.IOException: Password has expired, please reset password."
 							: e.getMessage());
@@ -101,15 +107,13 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 					conn.close();
 				}
 			} catch (Exception e) {
-				mJsonObj.put("result", "nok");
-				mJsonObj.put("message", e.getMessage());
+				jsonObject.put("result", "nok");
+				jsonObject.put("message", e.getMessage());
 			}
 
 		}
-
-		return mJsonObj.toString();
+		
+		return jsonObject.toString();
 	}
-
-	
 
 }

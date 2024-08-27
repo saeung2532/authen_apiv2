@@ -30,6 +30,11 @@ public class ExceptionAdvice {
 		return e.getMessage();
 	}
 
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<String> handleException(Exception e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -38,11 +43,6 @@ public class ExceptionAdvice {
 	@ExceptionHandler(DatabaseException.class)
 	public ResponseEntity<String> handleDatabaseException(DatabaseException ex) {
 		return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<String> handleException(Exception e) {
-		return new ResponseEntity<>("Generic exception caught globally", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(CustomServiceException.class)

@@ -8,6 +8,8 @@ import static com.br.api.securities.SecurityConstants.TOKEN_PREFIX;
 import java.util.Date;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -20,6 +22,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtUtil {
+	
+	private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
 	public String createToken(String username) {
 		Claims claims = Jwts.claims().setSubject(username).setIssuer("aha").setAudience("aloha");

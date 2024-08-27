@@ -30,7 +30,7 @@ public class JWTAuthenticationFiltter extends UsernamePasswordAuthenticationFilt
 	public JWTAuthenticationFiltter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;
-		this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/auth/login", "POST"));
+		this.setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/auth/v2/login", "POST"));
 	}
 
 	@Override
@@ -39,7 +39,6 @@ public class JWTAuthenticationFiltter extends UsernamePasswordAuthenticationFilt
 
 		try {
 			UserRequest userRequest = new ObjectMapper().readValue(request.getInputStream(), UserRequest.class);
-
 			return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userRequest.getUsername(),
 					userRequest.getPassword(), new ArrayList<>()));
 		} catch (IOException ex) {
@@ -70,50 +69,4 @@ public class JWTAuthenticationFiltter extends UsernamePasswordAuthenticationFilt
 		}
 	}
 	
-//	@Override
-//	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-//			Authentication authResult) throws IOException, ServletException {
-//		if (authResult.getPrincipal() != null) {
-//			org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) authResult
-//					.getPrincipal();
-//
-//			String username = user.getUsername();
-//
-//			if (username != null && username.length() > 0) {
-//				Claims claims = Jwts.claims().setSubject(username).setIssuer("aha");
-//
-//				List<String> roles = new ArrayList<>();
-//
-//				user.getAuthorities().stream().forEach(authority -> roles.add(authority.getAuthority()));
-//
-//				claims.put(CLAIMS_ROLE, roles);
-//				claims.put("value", "aha");
-//
-//				response.setContentType("application/json");
-//				response.setCharacterEncoding("UTF-8");
-//
-//				Map<String, Object> responseJSON = new HashMap<>();
-//
-//				responseJSON.put("token", createToken(claims));
-//
-//				OutputStream out = response.getOutputStream();
-//				ObjectMapper mapper = new ObjectMapper();
-//				mapper.writerWithDefaultPrettyPrinter().writeValue(out, responseJSON);
-//
-//				out.flush();
-//
-//			}
-//
-//		}
-//
-//	}
-//
-//	private String createToken(Claims claims) {
-//		return Jwts.builder().setClaims(claims)
-//				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-//				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
-//
-//	}
-
-
 }

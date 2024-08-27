@@ -35,7 +35,7 @@ public class CompanyDao {
 	}
 
 	public String getAllCompany() throws JsonProcessingException {
-		logger.info("Repository: getTest");
+		logger.info("Repository: getAllCompany");
 
 		try {
 			String sql = "SELECT ROW_NUMBER() OVER(ORDER BY CCCONO) AS ID, CCCONO, CCDIVI, TRIM(CCROW3) AS CCCONM, TRIM(CCCONO) || ' : ' || TRIM(CCDIVI) || ' : ' || TRIM(CCROW3) AS COMPANY\n"

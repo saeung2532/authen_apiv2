@@ -25,8 +25,7 @@ public class MDCClientHttpRequestInterceptor implements ClientHttpRequestInterce
 			throws IOException {
 		// Add the UUID to the request headers
 		String uuid = MDC.get(MDC_UUID_KEY);
-//		logger.info("HttpRequestInterceptor: {} ", uuid);
-
+		
 		if (uuid != null) {
 			request.getHeaders().add(HEADER_REQUEST_UUID, uuid);
 		} else {
@@ -34,7 +33,7 @@ public class MDCClientHttpRequestInterceptor implements ClientHttpRequestInterce
 
 		}
 		
-		logger.debug("HttpRequestInterceptor: {} ", uuid);
+		logger.debug("MDCClientHttpRequestInterceptor: {} ", uuid);
 
 		// Proceed with the request
 		return execution.execute(request, body);
