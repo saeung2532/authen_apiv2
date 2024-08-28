@@ -8,6 +8,5 @@ public interface SecurityConstants {
     String MDC_UUID_KEY = "UUID";
     String TOKEN_PREFIX = "Bearer ";
     String CLAIMS_ROLE = "role";
-//    long EXPIRATION_TIME = 3000;
-    long EXPIRATION_TIME = 864_000_000; // 10 days
+    long EXPIRATION_TIME = 28800000; // 8 Hours
 }

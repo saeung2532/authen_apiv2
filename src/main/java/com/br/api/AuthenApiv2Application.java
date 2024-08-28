@@ -1,5 +1,7 @@
 package com.br.api;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -16,5 +18,11 @@ public class AuthenApiv2Application  extends SpringBootServletInitializer{
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(AuthenApiv2Application.class);
 	}
+	
+	@PostConstruct
+	public void logDirectory() {
+	    System.out.println("Log directory: " + System.getProperty("LOG_DIR"));
+	}
+	
 	
 }

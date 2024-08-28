@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<!-- config path to store log 
+	<!-- config path to store log -->
 	<property name="LOGS" value="./logs" />
-	<property name="LOGS" value="${user.home}/logs" />
-	<property name="LOGS" value="${LOG_DIR:-./logs}" />
-	-->
-	<property name="LOGS" value="${user.home}/logs/authen_apiv2" />
+	<!-- Set log directory based on the OS
+	<property name="LOG_DIR_WINDOWS" value="./logs"/>
+    <property name="LOG_DIR_UBUNTU" value="/opt/tomcat/logs"/>
+    
+    <property name="LOGS" value="${os.name.contains('Windows') ? LOG_DIR_WINDOWS : LOG_DIR_UBUNTU}"/>
+	 -->
+    
+    
+    
 	<property name="MDC" value="%X{UUID}" />
 
 	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
