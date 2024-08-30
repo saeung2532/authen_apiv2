@@ -1,28 +1,22 @@
 package com.br.api;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
-public class AuthenApiv2Application  extends SpringBootServletInitializer{
+@EnableDiscoveryClient
+public class AuthenApiv2Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AuthenApiv2Application.class, args);
 	}
-	
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(AuthenApiv2Application.class);
 	}
-	
-	@PostConstruct
-	public void logDirectory() {
-	    System.out.println("Log directory: " + System.getProperty("LOG_DIR"));
-	}
-	
-	
+
 }
