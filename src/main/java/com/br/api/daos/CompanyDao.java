@@ -20,9 +20,13 @@ public class CompanyDao {
 	protected static final Logger logger = LogManager.getLogger(CompanyDao.class);
 
 	@Value("${spring.datasource.m3.schema}")
+//	@Autowired
+//	@Qualifier("m3Datasource")
 	private String schemaM3;
 
 	@Value("${spring.datasource.addon.schema}")
+//	@Autowired
+//	@Qualifier("addonProperties")
 	private String schemaAddon;
 
 	private JdbcTemplate jdbcTemplate;

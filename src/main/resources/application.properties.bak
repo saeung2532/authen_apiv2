@@ -1,6 +1,0 @@
-server.port=9090
-
-jwt.secret=aha
-jwt.expiration=3600000 
-
-logging.level.org.springframework.jdbc.core=debug

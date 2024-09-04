@@ -3,24 +3,40 @@ server:
     context-path: /authen_api
   port: 9090
   
-app:
-  upload:
-    path: images
-
 spring:
   application:
     name: AUTHEN-SERVICE
   servlet:
     multipart:
       max-file-size: 512KB
-      max-request-size: 512KB
+      max-request-size: 512KB  
       
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+#  endpoint:
+#    info:
+#      enabled: true
+#  endpoint:
+#    metrics:
+#      enabled: true
+#      show-details: always
+  
+app:
+  upload:
+    path: images
+ 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-    instance:
-      preferIpAddress: true      
+    fetchRegistry: true
+    registerWithEureka: true
 
 ---
 spring:
@@ -55,8 +71,6 @@ logging:
     org:
       springframework:
         jdbc.core: debug
-#  file:
-#    path: ./logs    
        
 ---
 #spring:

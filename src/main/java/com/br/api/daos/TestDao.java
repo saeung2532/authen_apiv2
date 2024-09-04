@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,10 +18,10 @@ public class TestDao {
 
 	protected static final Logger logger = LogManager.getLogger(TestDao.class);
 
-	@Value("${spring.datasource.m3.schema}")
+//	@Value("${spring.datasource.m3.schema}")
 	private String schemaM3;
 
-	@Value("${spring.datasource.addon.schema}")
+//	@Value("${spring.datasource.addon.schema}")
 	private String schemaAddon;
 
 	private JdbcTemplate jdbcTemplate;

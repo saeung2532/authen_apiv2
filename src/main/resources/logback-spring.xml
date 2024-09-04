@@ -6,7 +6,7 @@
 	<property name="LOGS" value="${user.home}/logs" />
 	<property name="LOGS" value="${LOG_DIR:-./logs}" />
 	-->
-	<property name="LOGS" value="${user.home}/logs/authen_apiv2" />
+	<property name="LOGS" value="${user.home}/logs" />
 	<property name="MDC" value="%X{UUID}" />
 
 	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
