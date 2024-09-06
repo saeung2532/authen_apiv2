@@ -9,12 +9,32 @@ public class CorsConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**");
-//		registry.addMapping("/**")
-//				.allowedOrigins("http://192.200.9.172") // Add IP addresses or domains here
-//				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-//				.allowedHeaders("*")
-//				.allowCredentials(true);
+		// registry.addMapping("/**");
+		registry.addMapping("/**")
+				.allowedOrigins("http://localhost", "http://127.0.0.1")  // Only allow localhost
+				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+				.allowedHeaders("*")
+				.allowCredentials(true);
 	}
 
+//	@Component
+//	public class UserAgentFilter implements Filter {
+//
+//	    @Override
+//	    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+//	            throws IOException, ServletException {
+//	        HttpServletRequest httpRequest = (HttpServletRequest) request;
+//	        HttpServletResponse httpResponse = (HttpServletResponse) response;
+//
+//	        String userAgent = httpRequest.getHeader("User-Agent");
+//
+//	        if (userAgent != null && (userAgent.contains("Mozilla") || userAgent.contains("Chrome") || userAgent.contains("Safari") || userAgent.contains("Firefox"))) {
+//	            httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Access from browsers is blocked");
+//	            return;
+//	        }
+//
+//	        chain.doFilter(request, response);
+//	    }
+//	}
+	
 }

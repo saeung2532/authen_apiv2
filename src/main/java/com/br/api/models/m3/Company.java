@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 public class Company {
 
 	@JsonProperty("CCCONO")
-	private Integer CCCONO;
+	private String CCCONO;
 
 	@JsonProperty("CCDIVI")
 	private String CCDIVI;

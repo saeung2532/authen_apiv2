@@ -5,7 +5,7 @@ server:
   
 spring:
   application:
-    name: AUTHEN-SERVICE
+    name: 2-AUTHEN-SERVICE
   servlet:
     multipart:
       max-file-size: 512KB
