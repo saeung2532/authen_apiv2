@@ -15,7 +15,7 @@ import lombok.Setter;
 public class UserAuthenRequest {
 
 	@NotEmpty()
-	@Size(min = 1, max = 100)
+	@Size(min = 1, max = 20)
 	private String username;
 
 	@NotEmpty()
@@ -23,7 +23,7 @@ public class UserAuthenRequest {
 	private String password;
 
 	@NotEmpty()
-	private Integer company;
+	private String company;
 
 	@NotEmpty()
 	private String application;

@@ -13,7 +13,15 @@ public class ConnectionDB2Service {
 	
 	}
 	
-	public Connection ConnectionDB2(String username, String password) throws ClassNotFoundException, SQLException {
+	public Connection doConnect() throws ClassNotFoundException, SQLException {
+		String jdbcClassName = "com.ibm.as400.access.AS400JDBCDriver";
+		String url = "jdbc:as400://192.200.9.190;";
+		Class.forName(jdbcClassName);
+		
+		return DriverManager.getConnection(url, "M3SRVICT", "ICT12345");
+	    }
+	
+	public Connection dologin(String username, String password) throws ClassNotFoundException, SQLException {
 		String jdbcClassName = "com.ibm.jtopenlite.database.jdbc.JDBCDriver";
 		String url = "jdbc:jtopenlite://192.200.9.190";
 		Class.forName(jdbcClassName);

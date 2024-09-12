@@ -22,13 +22,15 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtUtil {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
-	public String createToken(String username) {
-		Claims claims = Jwts.claims().setSubject(username).setIssuer("aha").setAudience("aloha");
-		claims.put(CLAIMS_ROLE, "admin");
-		claims.put("value", "foo");
+	public String createToken(String company, String username, String role) {
+		Claims claims = Jwts.claims()
+				.setSubject(company)
+				.setIssuer("authen-service")
+				.setAudience(username);
+		claims.put(CLAIMS_ROLE, role);
 		return doCreateToken(claims, username);
 	}
 

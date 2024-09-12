@@ -58,8 +58,8 @@ public class JWTAuthenticationFiltter extends UsernamePasswordAuthenticationFilt
 
 			if (username != null && username.length() > 0) {
 				Map<String, Object> responseJSON = new HashMap<>();
-				responseJSON.put("token", jwtUtil.createToken(username));
-				
+				responseJSON.put("token", jwtUtil.createToken("", username, ""));
+
 				OutputStream out = response.getOutputStream();
 				ObjectMapper mapper = new ObjectMapper();
 				mapper.writerWithDefaultPrettyPrinter().writeValue(out, responseJSON);
@@ -68,5 +68,5 @@ public class JWTAuthenticationFiltter extends UsernamePasswordAuthenticationFilt
 			}
 		}
 	}
-	
+
 }

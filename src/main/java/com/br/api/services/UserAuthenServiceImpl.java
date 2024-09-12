@@ -1,6 +1,9 @@
 package com.br.api.services;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 import org.json.JSONObject;
@@ -52,7 +55,6 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 		JSONObject mJsonObj = new JSONObject();
 
 		try {
-
 			Claims validate = jwtUtil.validateToken(token);
 
 			mJsonObj.put("result", "ok");
@@ -78,21 +80,29 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 			return true;
 
 		} catch (Exception e) {
-			logger.error("validateToken: fase {}" + e.getMessage());
+			logger.error("validateToken: false {}" + e.getMessage());
 			return false;
 		}
 
 	}
 
 	@Override
-	public String loginDB2(String username, String password, Integer company, String application) {
+	public String loginDB2(String username, String password, String company, String application) {
 		logger.info("Service: loginDB2");
 		Connection conn = null;
 		try {
-			conn = connectionDB2Service.ConnectionDB2(username, password);
-			
+			conn = connectionDB2Service.dologin(username, password);
+
+			String getCompany[] = company.split(" : ");
+			String getCono = getCompany[0];
+			String getDivi = getCompany[1];
+			String getCompanyName = getCompany[2];
+
+			String getAuthen = getUserAuth(getCono, getDivi, application, username);
+			logger.debug("getAuthen: {}", getAuthen);
+
 			jsonObject.put("result", "ok");
-			jsonObject.put("token", jwtUtil.createToken(username));
+			jsonObject.put("token", jwtUtil.createToken(company, username, getAuthen));
 			jsonObject.put("message", "Login successfully");
 
 		} catch (Exception e) {
@@ -112,8 +122,59 @@ public class UserAuthenServiceImpl implements UserAuthenService {
 			}
 
 		}
-		
+
 		return jsonObject.toString();
+	}
+
+	private String getUserAuth(String cono, String divi, String app, String username) {
+		logger.info("getUserAuth");
+
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			conn = connectionDB2Service.doConnect();
+			stmt = conn.createStatement();
+
+			String query = "SELECT CTL_SEQ, CTL_REM \n"
+					+ "FROM BRLDTA0100.APPCTL1 a, BRLDTA0100.STAFFLIST b  \n"
+					+ "WHERE CTL_CONO = '" + cono + "'\n"
+					+ "AND CTL_CODE = '" + app + "' \n"
+					+ "AND CTL_UID = '" + username + "' \n"
+					+ "AND b.ST_N6L3 = a.CTL_UID \n"
+					+ "AND b.ST_STS = '20' \n"
+					+ "GROUP BY CTL_SEQ, CTL_REM \n"
+					+ "ORDER BY CTL_SEQ";
+			logger.debug(query);
+			ResultSet mRes = stmt.executeQuery(query);
+
+			while (mRes.next()) {
+				return mRes.getString("CTL_REM").trim();
+			}
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				logger.error(e.getMessage());
+			}
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				logger.error(e.getMessage());
+			}
+
+		}
+
+		return "US";
+
 	}
 
 }
